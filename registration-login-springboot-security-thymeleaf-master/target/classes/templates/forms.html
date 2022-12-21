@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/forms">ADMIN PANEL</a>
+
+  </div>
+  </div>
+</nav>
+<br>
+<div th:if="${param.successSetValue}">
+    <div class="alert alert-info">Успешно изменено</div>
+</div>
+<div class="d-flex justify-content-between">
+
+    <form action="/form/setMessageById" method="post">
+        <br>
+        <div class="form-check form-check-inline" >
+            <input type="text" id="form6Example4" name="message"  required/>
+
+        </div>
+        <div class="form-check form-check-inline" style="width: 20%;">
+            <input type="number" id="form6Example3" class="form-control" min="1" max="6" name="line"/>
+        </div>
+        <div class="form-check-inline">
+            <button type="submit" class="btn btn-primary btn-block">Edit</button>
+        </div>
+    </form>
+  <form action="/form/getByFilter" th:object="${filterDto}" method="get">
+
+<!--    date input   -->
+    <div class="form-check form-check-inline">
+      <label for="start">start date</label>
+      <input type="date" id="start"  class="form-control" min="2022-12-01" th:field="*{startDate}" required th/>
+    </div>
+    <div class="form-check form-check-inline">
+      <label for="start">end date</label>
+      <input type="date" id="end"  class="form-control" min="2022-12-01" th:field="*{endDate}" required/>
+    </div>
+
+    <!--    chechker input   -->
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" th:field="*{condition1}">
+      <label class="form-check-label" for="inlineCheckbox1">1</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" th:field="*{condition2}">
+      <label class="form-check-label" for="inlineCheckbox2">2</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" th:field="*{condition3}">
+      <label class="form-check-label" for="inlineCheckbox3">3</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option1" th:field="*{condition4}">
+      <label class="form-check-label" for="inlineCheckbox1">4</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option2" th:field="*{condition5}">
+      <label class="form-check-label" for="inlineCheckbox2">5</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option3" th:field="*{condition6}">
+      <label class="form-check-label" for="inlineCheckbox3">6</label>
+    </div>
+    <div class="form-check-inline">
+      <button type="submit" class="btn btn-primary btn-block">Filter</button>
+    </div>
+  </form>
+
+
+</div>
+<br>
+  <div class="row">
+    <h1 class="text-center"> ЗАЯВКИ </h1>
+  </div>
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th style="width: 8%;">Номер подразделения</th>
+      <th style="width: 10%;">VIN</th>
+      <th style="width: 10%;">Дата</th>
+      <th style="width: 3%;">1</th>
+      <th style="width: 3%;">2</th>
+      <th style="width: 3%;">3</th>
+      <th style="width: 3%;">4</th>
+      <th style="width: 3%;">5</th>
+      <th style="width: 3%;">6</th>
+      <th style="width: 24%;">доплонительно</th>
+        <th style="width: 3%;">О</th>
+        <th style="width: 3%;">П</th>
+        <th style="width: 4%;"></th>
+    </tr>
+
+
+    </thead>
+    <tbody>
+    <tr th:each="form: ${forms}">
+
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Подробно</button></td>
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <p th:text="${'subdivision: ' + form.userDto.subdivision}"></p>
+                    <p th:text="${'full name: ' + form.userDto.fullName}"></p>
+                    <p th:text="${'city: ' + form.userDto.city}"></p>
+                    <p th:text="${'region: ' + form.userDto.region}"></p>
+                    <p th:text="${'email: ' + form.userDto.email}"></p>
+                </div>
+            </div>
+        </div>
+
+
+
+      <td th:text="${form.vin}"></td>
+      <td th:text="${form.date}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition1}" th:id="*{'condition1_' + form.id}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition2}" th:id="*{'condition2_' + form.id}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition3}" th:id="*{'condition3_' + form.id}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition4}" th:id="*{'condition4_' + form.id}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition5}" th:id="*{'condition5_' + form.id}"></td>
+      <td><input class="form-check-input" type="checkbox" th:checked="*{form.condition6}" th:id="*{'condition6_' + form.id}"></td>
+      <td th:text="${form.description}" style=" word-wrap:break-word; table-layout: fixed"></td>
+      <td><input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option3" th:checked="*{form.isPerformed}" th:id="*{'isPerformed_' + form.id}"></td>
+        <td><input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option3" th:checked="*{form.isViewed}" th:id="*{'isViewed_' + form.id}"></td>
+        <td>
+            <div class="form-check-inline"><button type="submit" class="btn btn-primary btn-block" th:attr="onclick=|saveForm('${form.id}')|" ></button></div>
+        </td>
+    </tr>
+    </tbody>
+  </table>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script>
+
+
+    function saveForm(id) {
+
+
+        let formDto = {
+            id : id,
+            condition1: document.getElementById("condition1_" + id).checked,
+            condition2: document.getElementById("condition2_" + id).checked,
+            condition3: document.getElementById("condition3_" + id).checked,
+            condition4: document.getElementById("condition4_" + id).checked,
+            condition5: document.getElementById("condition5_" + id).checked,
+            condition6: document.getElementById("condition6_" + id).checked,
+            isPerformed: document.getElementById("isPerformed_" + id).checked,
+            isViewed: document.getElementById("isViewed_" + id).checked
+        };
+            console.log( JSON.stringify(formDto));
+        const dataResponse = fetch("https://web-app-kwork1-production.up.railway.app/forms/update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(formDto)
+        })
+    }
+
+</script>
+
+
+
+  <style>
+    table {
+      table-layout: fixed;
+      width:100%
+    }
+    td {
+
+    }
+  </style>
+</div>
+</body>
+</html>

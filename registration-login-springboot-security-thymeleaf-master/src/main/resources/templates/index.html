@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .login-form {
+            width: 340px;
+            margin: 50px auto;
+            font-size: 15px;
+        }
+        .login-form form {
+            margin-bottom: 15px;
+            background: #f7f7f7;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        .login-form h2 {
+            margin: 0 0 15px;
+        }
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-form"  >
+    <form method="post" th:action="@{/form}" class="form-horizontal" role="form" th:object="${formDto}">
+        <h2 class="text-center">Форма для заявки</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">successfully added</div>
+        </div>
+        <br>
+
+        <!-- Text input -->
+        <div class="form-outline mb-4 text-center">
+            <input type="text" id="form6Example4" class="form-control" th:field="*{vin}" minlength="17" maxlength="17" required/>
+            <label class="form-label" for="form6Example4" >Vin (17 символов)</label>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4 text-center">
+            <input type="datetime-local" id="start" name="trip-start" class="form-control" min="2022-12-01" th:field="*{date}"/>
+            <label class="form-label" for="start" >Желаемая дата и время</label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker1" th:field="*{condition1}">
+            <label class="form-check-label" for="checker1" th:text="${checkboxes.condition1}">
+                Default checkbox
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker2" th:field="*{condition2}">
+            <label class="form-check-label" for="checker2" th:text="${checkboxes.condition2}">
+                Default checkbox
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker3" th:field="*{condition3}">
+            <label class="form-check-label" for="checker3" th:text="${checkboxes.condition3}">
+                Default checkbox
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker4" th:field="*{condition4}">
+            <label class="form-check-label" for="checker4" th:text="${checkboxes.condition4}">
+                Default checkbox
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker5" th:field="*{condition5}">
+            <label class="form-check-label" for="checker5" th:text="${checkboxes.condition5}">
+                Default checkbox
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checker6" th:field="*{condition6}">
+            <label class="form-check-label" for="checker5" th:text="${checkboxes.condition6}">
+                Default checkbox
+            </label>
+            <br><br>
+        </div>
+
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+            <textarea class="form-control" id="form6Example7" rows="4" th:field="*{description}"></textarea>
+            <label class="form-label" for="form6Example7">Дополнительные данные</label>
+        </div>
+
+
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4 ">Place order</button>
+    </form>
+
+</div>
+
+</body>
+</html>
